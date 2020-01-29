@@ -6,10 +6,22 @@
 {% block main_content %}
   <h1>Категории и числа</h1>
   <ul>
-  {% for cat, count in counts.items %}
-    <li><span class="badge badge-info">{{ cat }}: {{ count }}</span></li>
+  {% for cat in cats %}
+
+    <li><span class="badge badge-info">{{ cat.name }}: {{ cat.todos_count }}</span></li>
+
   {% empty %}
     <li>Список задач по категориям пуст. Попробуйте добавить их из админки</li>
+  {% endfor %}
+  </ul>
+  <h1>Приоритеты</h1>
+  <ul>
+  {% for priority in priorities %}
+
+    <li><span class="badge badge-info">{{ priority.name }}: {{ priority.todos_count }}</span></li>
+
+  {% empty %}
+    <li>Список приоритетов пуст. Попробуйте добавить их из админки</li>
   {% endfor %}
   </ul>
 {% endblock %}

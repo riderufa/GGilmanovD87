@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from tasks.models import TodoItem, Category
+from tasks.models import TodoItem, Category, Priority
 
 
 def index(request):
@@ -14,13 +14,16 @@ def index(request):
     # for t in Tag.objects.all()}
 
     # 3rd version
-    from django.db.models import Count
+    # from django.db.models import Count
 
-    counts = Category.objects.annotate(total_tasks=Count(
-        'todoitem')).order_by("-total_tasks")
-    counts = {c.name: c.total_tasks for c in counts}
+    # counts = Category.objects.annotate(total_tasks=Count(
+    #     'todoitem')).order_by("-total_tasks")
+    # counts = {c.name: c.total_tasks for c in counts}
 
-    return render(request, "tasks/index.html", {"counts": counts})
+    cats = Category.objects.all()
+    priorities = Priority.objects.all()
+
+    return render(request, "tasks/index.html", {"cats": cats, "priorities": priorities})
 
 
 def filter_tasks(tags_by_task):

@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
+from django.views.decorators.cache import cache_page
 from tasks.models import TodoItem, Category, Priority
+from datetime import datetime
 
 
 def index(request):
@@ -25,6 +27,10 @@ def index(request):
 
     return render(request, "tasks/index.html", {"cats": cats, "priorities": priorities})
 
+@cache_page(300)
+def date_cash(request):
+    dc = datetime.now()
+    return render(request, "tasks/date_cash.html", {"dc": dc,})
 
 def filter_tasks(tags_by_task):
     return set(sum(tags_by_task, []))
